@@ -8,13 +8,12 @@
 //
 // This exercise is meant to show you what to expect when passing data to Cow.
 // Fix the unit tests by checking for Cow::Owned(_) and Cow::Borrowed(_) at the
-// TODO markers.
+// DONE markers.
 //
 // Execute `rustlings hint cow1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 use std::borrow::Cow;
+use std::borrow::Cow::{Borrowed, Owned};
 
 fn abs_all<'a, 'b>(input: &'a mut Cow<'b, [i32]>) -> &'a mut Cow<'b, [i32]> {
     for i in 0..input.len() {
@@ -48,7 +47,10 @@ mod tests {
         let slice = [0, 1, 2];
         let mut input = Cow::from(&slice[..]);
         match abs_all(&mut input) {
-            // TODO
+            // DONE
+            Borrowed(s) => Ok(()),
+
+            Owned(_) => Err("Expected: Borrowed, Actual: Owned"),
         }
     }
 
@@ -60,7 +62,9 @@ mod tests {
         let slice = vec![0, 1, 2];
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
-            // TODO
+            // DONE
+            Borrowed(_) => Err("Expect Owned, actual: Borrowed"),
+            Owned(_) => Ok(()),
         }
     }
 
@@ -72,7 +76,9 @@ mod tests {
         let slice = vec![-1, 0, 1];
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
-            // TODO
+            // DONE
+            Borrowed(_) => Err("Expected: Owned, Actual: Borrowed"),
+            Owned(_) => Ok(()),
         }
     }
 }
